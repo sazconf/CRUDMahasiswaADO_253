@@ -16,5 +16,11 @@ namespace CRUDMahasiswaADO
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cmbJK.Items.Add("L");
+            cmbJK.Items.Add("P");
+        }
     }
 }
