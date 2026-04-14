@@ -153,7 +153,7 @@
             this.txtKodeProdi.Name = "txtKodeProdi";
             this.txtKodeProdi.Size = new System.Drawing.Size(200, 22);
             this.txtKodeProdi.TabIndex = 11;
-            this.txtKodeProdi.Text = "Input Code Prodi";
+            this.txtKodeProdi.Text = "Input Code Prodi(number only)";
             // 
             // btnConncet
             // 
