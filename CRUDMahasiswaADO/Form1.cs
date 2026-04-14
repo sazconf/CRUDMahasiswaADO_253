@@ -119,5 +119,34 @@ namespace CRUDMahasiswaADO
         {
 
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                    conn.Open();
+
+                string query = "UPDATE Mahasiswa SET Nama=@Nama, JenisKelamin=@JK, TanggalLahir=@TanggalLahir, Alamat=@Alamat, KodeProdi=@KodeProdi WHERE NIM=@NIM";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@NIM", txtNIM.Text);
+                cmd.Parameters.AddWithValue("@Nama", txtNama.Text);
+                cmd.Parameters.AddWithValue("@JK", cmbJK.Text);
+                cmd.Parameters.AddWithValue("@TanggalLahir", dtpTanggalLahir.Value);
+                cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
+                cmd.Parameters.AddWithValue("@KodeProdi", txtKodeProdi.Text);
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Updated!");
+                btnLoad.PerformClick();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
     }
 }
