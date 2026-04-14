@@ -148,5 +148,28 @@ namespace CRUDMahasiswaADO
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                    conn.Open();
+
+                string query = "DELETE FROM Mahasiswa WHERE NIM=@NIM";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@NIM", txtNIM.Text);
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Deleted!");
+                btnLoad.PerformClick();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
     }
 }
