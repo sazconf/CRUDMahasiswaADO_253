@@ -162,6 +162,7 @@
             this.btnConncet.TabIndex = 12;
             this.btnConncet.Text = "Conncet to Database";
             this.btnConncet.UseVisualStyleBackColor = true;
+            this.btnConncet.Click += new System.EventHandler(this.btnConncet_Click);
             // 
             // btnLoad
             // 
@@ -180,6 +181,7 @@
             this.btnInsert.TabIndex = 14;
             this.btnInsert.Text = "Insert";
             this.btnInsert.UseVisualStyleBackColor = true;
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
             // btnUpdate
             // 
