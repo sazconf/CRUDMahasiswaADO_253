@@ -38,6 +38,10 @@
             this.dtpTanngalLahir = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.txtAlamat = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtKodeProdi = new System.Windows.Forms.TextBox();
+            this.btnConncet = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtNIM
@@ -85,12 +89,12 @@
             // 
             // cmbJK
             // 
+            this.cmbJK.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbJK.FormattingEnabled = true;
             this.cmbJK.Location = new System.Drawing.Point(200, 181);
             this.cmbJK.Name = "cmbJK";
             this.cmbJK.Size = new System.Drawing.Size(121, 24);
             this.cmbJK.TabIndex = 5;
-            this.cmbJK.Text = "Select";
             this.cmbJK.UseWaitCursor = true;
             // 
             // label5
@@ -122,16 +126,56 @@
             // txtAlamat
             // 
             this.txtAlamat.Location = new System.Drawing.Point(200, 282);
+            this.txtAlamat.Multiline = true;
             this.txtAlamat.Name = "txtAlamat";
-            this.txtAlamat.Size = new System.Drawing.Size(200, 22);
+            this.txtAlamat.Size = new System.Drawing.Size(272, 56);
             this.txtAlamat.TabIndex = 9;
             this.txtAlamat.Text = "Input Alamat";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(91, 362);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 16);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Kode Prodi";
+            // 
+            // txtKodeProdi
+            // 
+            this.txtKodeProdi.Location = new System.Drawing.Point(200, 356);
+            this.txtKodeProdi.Name = "txtKodeProdi";
+            this.txtKodeProdi.Size = new System.Drawing.Size(200, 22);
+            this.txtKodeProdi.TabIndex = 11;
+            this.txtKodeProdi.Text = "Input Code Prodi";
+            // 
+            // btnConncet
+            // 
+            this.btnConncet.Location = new System.Drawing.Point(266, 24);
+            this.btnConncet.Name = "btnConncet";
+            this.btnConncet.Size = new System.Drawing.Size(163, 23);
+            this.btnConncet.TabIndex = 12;
+            this.btnConncet.Text = "Conncet to Database";
+            this.btnConncet.UseVisualStyleBackColor = true;
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Location = new System.Drawing.Point(473, 23);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.TabIndex = 13;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnLoad);
+            this.Controls.Add(this.btnConncet);
+            this.Controls.Add(this.txtKodeProdi);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.txtAlamat);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtpTanngalLahir);
@@ -161,6 +205,10 @@
         private System.Windows.Forms.DateTimePicker dtpTanngalLahir;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAlamat;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtKodeProdi;
+        private System.Windows.Forms.Button btnConncet;
+        private System.Windows.Forms.Button btnLoad;
     }
 }
 
