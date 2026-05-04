@@ -23,6 +23,8 @@ namespace CRUDMahasiswaADO
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dBAkademikADODataSet.Mahasiswa' table. You can move, or remove it, as needed.
+            this.mahasiswaTableAdapter.Fill(this.dBAkademikADODataSet.Mahasiswa);
             cmbJK.Items.Add("L");
             cmbJK.Items.Add("P");
         }
@@ -31,25 +33,16 @@ namespace CRUDMahasiswaADO
         {
             try
             {
-                if (conn.State == ConnectionState.Closed)
-                    conn.Open();
+                this.mahasiswaBindingSource.AddNew();
 
-                string query = "INSERT INTO Mahasiswa VALUES (@NIM, @Nama, @JK, @TanggalLahir, @Alamat, @KodeProdi, @TanggalDaftar)";
+                txtNIM.Text = "";
+                txtNama.Text = "";
+                cmbJK.Text = "";
+                txtAlamat.Text = "";
+                txtKodeProdi.Text = "";
+                dtpTanggalLahir.Value = DateTime.Now;
 
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@NIM", txtNIM.Text);
-                cmd.Parameters.AddWithValue("@Nama", txtNama.Text);
-                cmd.Parameters.AddWithValue("@JK", cmbJK.Text);
-                cmd.Parameters.AddWithValue("@TanggalLahir", dtpTanggalLahir.Value);
-                cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-                cmd.Parameters.AddWithValue("@KodeProdi", txtKodeProdi.Text);
-                cmd.Parameters.AddWithValue("@TanggalDaftar", DateTime.Now);
-
-                cmd.ExecuteNonQuery();
-
-                MessageBox.Show("Inserted!");
-                btnLoad.PerformClick(); // refresh
+                MessageBox.Show("Fill data then click Save/Update.");
             }
             catch (Exception ex)
             {
@@ -77,37 +70,8 @@ namespace CRUDMahasiswaADO
         {
             try
             {
-                if (conn.State == ConnectionState.Closed)
-                    conn.Open();
-
-                dataGridView1.Rows.Clear();
-                dataGridView1.Columns.Clear();
-
-                dataGridView1.Columns.Add("NIM", "NIM");
-                dataGridView1.Columns.Add("Nama", "Nama");
-                dataGridView1.Columns.Add("JenisKelamin", "Jenis Kelamin");
-                dataGridView1.Columns.Add("TanggalLahir", "Tanggal Lahir");
-                dataGridView1.Columns.Add("Alamat", "Alamat");
-                dataGridView1.Columns.Add("KodeProdi", "Kode Prodi");
-
-                string query = "SELECT * FROM Mahasiswa";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    dataGridView1.Rows.Add(
-                        reader["NIM"],
-                        reader["Nama"],
-                        reader["JenisKelamin"],
-                        Convert.ToDateTime(reader["TanggalLahir"]).ToShortDateString(),
-                        reader["Alamat"],
-                        reader["KodeProdi"]
-                    );
-                }
-
-                reader.Close();
+                this.mahasiswaTableAdapter.Fill(this.dBAkademikADODataSet.Mahasiswa);
+                MessageBox.Show("Data loaded!");
             }
             catch (Exception ex)
             {
@@ -124,24 +88,11 @@ namespace CRUDMahasiswaADO
         {
             try
             {
-                if (conn.State == ConnectionState.Closed)
-                    conn.Open();
+                this.Validate();
+                this.mahasiswaBindingSource.EndEdit();
+                this.mahasiswaTableAdapter.Update(this.dBAkademikADODataSet.Mahasiswa);
 
-                string query = "UPDATE Mahasiswa SET Nama=@Nama, JenisKelamin=@JK, TanggalLahir=@TanggalLahir, Alamat=@Alamat, KodeProdi=@KodeProdi WHERE NIM=@NIM";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@NIM", txtNIM.Text);
-                cmd.Parameters.AddWithValue("@Nama", txtNama.Text);
-                cmd.Parameters.AddWithValue("@JK", cmbJK.Text);
-                cmd.Parameters.AddWithValue("@TanggalLahir", dtpTanggalLahir.Value);
-                cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text);
-                cmd.Parameters.AddWithValue("@KodeProdi", txtKodeProdi.Text);
-
-                cmd.ExecuteNonQuery();
-
-                MessageBox.Show("Updated!");
-                btnLoad.PerformClick();
+                MessageBox.Show("Saved successfully!");
             }
             catch (Exception ex)
             {
@@ -153,18 +104,10 @@ namespace CRUDMahasiswaADO
         {
             try
             {
-                if (conn.State == ConnectionState.Closed)
-                    conn.Open();
-
-                string query = "DELETE FROM Mahasiswa WHERE NIM=@NIM";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@NIM", txtNIM.Text);
-
-                cmd.ExecuteNonQuery();
+                mahasiswaBindingSource.RemoveCurrent();
+                mahasiswaTableAdapter.Update(dBAkademikADODataSet.Mahasiswa);
 
                 MessageBox.Show("Deleted!");
-                btnLoad.PerformClick();
             }
             catch (Exception ex)
             {
@@ -174,16 +117,7 @@ namespace CRUDMahasiswaADO
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-
-                txtNIM.Text = row.Cells["NIM"].Value.ToString();
-                txtNama.Text = row.Cells["Nama"].Value.ToString();
-                cmbJK.Text = row.Cells["JenisKelamin"].Value.ToString();
-                txtAlamat.Text = row.Cells["Alamat"].Value.ToString();
-                txtKodeProdi.Text = row.Cells["KodeProdi"].Value.ToString();
-            }
+            
         }
     }
 }
