@@ -79,6 +79,7 @@ namespace CRUDMahasiswaADO
             }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show(
                     "Load Error: " + ex.Message
                 );
@@ -118,6 +119,7 @@ namespace CRUDMahasiswaADO
             }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show(
                     "Gagal menghitung total: " +
                     ex.Message
@@ -213,10 +215,18 @@ namespace CRUDMahasiswaADO
 
                 LoadData();
             }
+            catch (SqlException ex)
+            {
+                SimpanLog(ex.Message);
+                MessageBox.Show(
+                    "SQL Error: " + ex.Message
+                );
+            }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show(
-                    "Insert Error: " + ex.Message
+                    "General Error: " + ex.Message
                 );
             }
         }
@@ -233,6 +243,7 @@ namespace CRUDMahasiswaADO
             }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
@@ -303,10 +314,18 @@ namespace CRUDMahasiswaADO
 
                 LoadData();
             }
+            catch (SqlException ex)
+            {
+                SimpanLog(ex.Message);
+                MessageBox.Show(
+                    "SQL Error: " + ex.Message
+                );
+            }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show(
-                    "Update Error: " + ex.Message
+                    "General Error: " + ex.Message
                 );
             }
         }
@@ -367,10 +386,18 @@ namespace CRUDMahasiswaADO
 
                 LoadData();
             }
+            catch (SqlException ex)
+            {
+                SimpanLog(ex.Message);
+                MessageBox.Show(
+                    "SQL Error: " + ex.Message
+                );
+            }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show(
-                    "Delete Error: " + ex.Message
+                    "General Error: " + ex.Message
                 );
             }
         }
@@ -404,7 +431,15 @@ namespace CRUDMahasiswaADO
             }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show("Backup gagal: " + ex.Message);
+            }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                {
+                    conn.Close();
+                }
             }
         }
 
@@ -434,8 +469,59 @@ namespace CRUDMahasiswaADO
             }
             catch (Exception ex)
             {
+                SimpanLog(ex.Message);
                 MessageBox.Show("Reset gagal: " + ex.Message);
             }
+            finally
+            {
+                if (conn != null && conn.State != ConnectionState.Closed)
+                {
+                    conn.Close();
+                }
+            }
         }
+
+        private void btnTestInjection_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query =
+                        "UPDATE Mahasiswa SET Nama = '" + txtNama.Text +
+                        "' WHERE NIM = '" + txtNIM.Text + "'";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Update berhasil dijalankan!");
+            }
+            catch (Exception ex)
+            {
+                SimpanLog(ex.Message);
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void SimpanLog(string pesan)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO LogError (waktu, pesan_error) VALUES (GETDATE(), @pesan)",
+                    conn))
+                {
+                    cmd.Parameters.AddWithValue("@pesan", pesan);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
